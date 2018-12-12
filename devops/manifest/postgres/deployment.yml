@@ -1,0 +1,50 @@
+# apiVersion: extensions/v1beta1
+# kind: Deployment
+# metadata:
+#   name: postgres-service
+#   labels:
+#     run: postgres-service
+# spec:
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         run: postgres-service
+#     spec:
+#       containers:
+#       - name: postgres-service
+#         image: postgres:9.5
+#         ports:
+#         - containerPort: 5432
+#           protocol: TCP
+
+# ---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-service
+  labels:
+    run: postgres-service
+spec:
+  containers:
+    - name: postgres-service
+      image: postgres:9.5
+      ports:
+        - containerPort: 5432
+          protocol: TCP
+      env:
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: example-config
+              key: POSTGRES_DB
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: example-config
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: example-config
+              key: POSTGRES_PASSWORD

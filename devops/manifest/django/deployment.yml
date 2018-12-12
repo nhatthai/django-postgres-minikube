@@ -1,19 +1,39 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
   name: web-service
   labels:
     run: web-service
 spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        run: web-service
-    spec:
-      containers:
-      - name: web-service
-        image: nhatthai/django-postgres:latest
-        ports:
+  containers:
+    - name: web-service
+      image: nhatthai/django-postgres:latest
+      ports:
         - containerPort: 8000
           protocol: TCP
+      env:
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: example-config
+              key: POSTGRES_DB
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: example-config
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: example-config
+              key: POSTGRES_PASSWORD
+        - name: DB_SERVICE
+          valueFrom:
+            configMapKeyRef:
+              name: example-config
+              key: DB_SERVICE
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: example-config
+              key: DB_PORT
