@@ -5,6 +5,7 @@ Deploy Django app and Postgres on Minikube
 + [Install Docker](https://docs.docker.com/engine/installation/)
 + Minikube
 + Django 1.9.7
++ Postgres 9.5
 
 # Run command
 
@@ -16,83 +17,55 @@ Deploy Django app and Postgres on Minikube
 	```
 
 #### Build App:
-	```
 	$ cd backend
 	$ docker build -t nhatthai/django-postgres .
-	```
 
 #### Push to Docker Hub
-	```
 	docker push nhatthai/django-postgres:latest
-	```
 
 ### Start Minikube
-	```
 	$ minikube start
-	```
 
 ### Create ConfigMap
-    ```
     $cd devops/manifest
     $kubectl create -f configmap.yml
-    ```
 
 ### Create Deployment Postgres
-	```
 	$ cd devops/manifest
 	$ kubectl create -f postgres/deployment.yml
-	```
 
 ### Create Service Postgres
-	```
 	$ cd devops/manifest
 	$ kubectl create -f postgres/service.yml
-	```
 
 ### Create Deployment
-	```
 	$ cd devops/manifest
 	$ kubectl create -f django/deployment.yml
-	```
 
 ### Create Service
-	```
 	$ cd devops/manifest
 	$ kubectl create -f django/service.yml
-	```
 
 ### Check Servive and run Command
-	```
 	$kubectl exec -it web-service /bin/bash
 
-	```
 
 #### Create Super User
-	```
 	python manage.py createsuperuser
-	```
 
 #### Run Server
-	```
 	root@web-service:#python manage.py runserver 0.0.0.0:8000
-	```
 
 ### Ingress
 #### Create Ingress
-```
 $ cd devops/manifest
 $ kubectl create -f ingress.yml
-```
 
 #### Check Ingress status
-```
 kubectl describe ing
-```
 
 #### Start Ingress on Minkube
-```
 $ minikube addons enable ingress
-```
 
 #### Get IP
 ```
