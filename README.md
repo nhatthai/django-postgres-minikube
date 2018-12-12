@@ -11,10 +11,8 @@ Deploy Django app and Postgres on Minikube
 
 ## Build Django Image
 #### Build Base Image: Django and Python3.6
-	```
 	$ cd django-postgres-minikube/devops
 	$ docker build -t nhatthai/python3.6_django  .
-	```
 
 #### Build App:
 	$ cd backend
@@ -58,30 +56,24 @@ Deploy Django app and Postgres on Minikube
 
 ### Ingress
 #### Create Ingress
-$ cd devops/manifest
-$ kubectl create -f ingress.yml
+	$ cd devops/manifest
+	$ kubectl create -f ingress.yml
 
 #### Check Ingress status
-kubectl describe ing
+	kubectl describe ing
 
 #### Start Ingress on Minkube
-$ minikube addons enable ingress
+	$ minikube addons enable ingress
 
 #### Get IP
-```
-$ minikube ip
-192.168.99.100
-```
+	$ minikube ip
+	192.168.99.100
 
 #### Add mysite.com into /etc/hosts
-```
-192.168.99.100 mysite.com
-```
+	192.168.99.100 mysite.com
 
 #### Check Django App
-```
-http://mysite.com/admin/
-```
+	http://mysite.com/admin/
 
 # Reference
 [Writing your first Django App](https://docs.djangoproject.com/en/2.1/intro/tutorial01/)
